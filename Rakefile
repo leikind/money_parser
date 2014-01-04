@@ -25,8 +25,13 @@ def randomly_replace_zeros_by_o(string)
     map{|_, idx| idx }
 
   return nil if indexes.empty?
-  idx = indexes[rand(indexes.size)]
-  string.clone[idx] = 'O'
+  idx  = indexes[rand(indexes.size)]
+  idx2 = indexes[rand(indexes.size)]
+
+  string.clone.tap do |cloned|
+    cloned[idx] = 'O'
+    cloned[idx] = 'o'
+  end
 end
 
 def generate_tests specs
@@ -37,7 +42,10 @@ def generate_tests specs
     money_string, result = pair
 
     accu << [money_string,       result]
-    accu << [random_amount_of_spaces + "-" + random_amount_of_spaces + money_string, result * -1]
+
+    unless result.nil?
+      accu << [random_amount_of_spaces + "-" + random_amount_of_spaces + money_string, result * -1]
+    end
 
     tuple_with_o = [randomly_replace_zeros_by_o(money_string), result]
 
@@ -47,8 +55,8 @@ def generate_tests specs
   }.each {|money_string, result|
 
       code << %!
-  it '\"#{money_string}\" should be parsed as #{result}' do
-    MoneyParser.parse(\"#{money_string}\").should == #{result}
+  it '\"#{money_string}\" should be parsed as #{result.inspect}' do
+    MoneyParser.parse(\"#{money_string}\").should == #{result.inspect}
   end\n!
   }
   code + "end\n"
@@ -56,6 +64,6 @@ end
 
 desc 'Generate tests'
 task :generate_tests do |rdoc|
-  require './spec/specification.rb'
+  require './specification.rb'
   File.open('./spec/money_parser_spec.rb', 'w'){|f| f.write generate_tests(SPECIFICATION)}
 end
