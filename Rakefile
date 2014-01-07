@@ -35,7 +35,9 @@ def randomly_replace_zeros_by_o(string)
 end
 
 def generate_tests specs
-  code = "require 'spec_helper'\ndescribe MoneyParser do\n"
+  ruby_code = "require 'spec_helper'\ndescribe MoneyParser do\n"
+
+  js_code = "var assert = require(\"assert\")\n\ndescribe('moneyParse', function(){\n"
 
   specs.inject([]) {|accu, pair|
 
@@ -54,16 +56,36 @@ def generate_tests specs
     accu
   }.each {|money_string, result|
 
-      code << %!
+      ruby_code << %!
   it '\"#{money_string}\" should be parsed as #{result.inspect}' do
     MoneyParser.parse(\"#{money_string}\").should == #{result.inspect}
   end\n!
+
+      js_code << %!
+  it('\"#{money_string}\" should be parsed as #{nil_to_null(result.inspect)}', function(){
+    assert.equal(#{nil_to_null(result.inspect)}, parse_money(\"#{money_string}\"));
+  });\n!
+
+
   }
-  code + "end\n"
+  [ruby_code + "end\n", js_code + "})\n"]
+end
+
+def nil_to_null(null_or_other)
+  null_or_other == 'nil' ? 'null' : null_or_other
 end
 
 desc 'Generate tests'
 task :generate_tests do |rdoc|
   require './specification.rb'
-  File.open('./spec/money_parser_spec.rb', 'w'){|f| f.write generate_tests(SPECIFICATION)}
+  ruby_code, js_code = generate_tests(SPECIFICATION)
+  File.open('./spec/money_parser_spec.rb', 'w'){|f| f.write ruby_code }
+  File.open('./test/money_parser_spec.js', 'w'){|f| f.write js_code }
 end
+
+
+
+
+
+
+
