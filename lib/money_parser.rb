@@ -2,6 +2,10 @@
 
 module MoneyParser
 
+  class Engine < ::Rails::Engine
+  end
+
+
   def self.parse(money_string)
 
     cleaned_up = money_string.

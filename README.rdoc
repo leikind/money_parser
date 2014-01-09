@@ -1,7 +1,7 @@
 Author::  Yuri Leikind
 
 
-A simple function in Ruby and similar function in Javascript which try to parse a string containing
+A simple function in Ruby and a similar function in Javascript which try to parse a string containing
 a money amount in any format and return a float.
 
 The functions return <tt>nil</tt>/<tt>null</tt> if the input is not a a money amount.

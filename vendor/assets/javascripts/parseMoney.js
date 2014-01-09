@@ -33,11 +33,11 @@ parseMoney = function(moneyString){
     }
   }
 
-  return normalized;
+  return parseFloat(normalized);
 };
 
 if (module){
   module.exports = parseMoney;
 }else{
-  window['parseMoney'] = parseMoney
+  window['parseMoney'] = parseMoney;
 }
