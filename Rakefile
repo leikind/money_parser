@@ -43,22 +43,28 @@ def generate_tests specs
       "var parseMoney = require('../vendor/assets/javascripts/parseMoney');\n\n" +
       "describe('moneyParse', function(){\n"
 
+
   specs.inject([]) {|accu, pair|
 
     money_string, result = pair
 
-    accu << [money_string,       result]
+    accu << [money_string, result]
 
     unless result.nil?
-      accu << [random_amount_of_spaces + "-" + random_amount_of_spaces + money_string, result * -1]
+      accu << [random_amount_of_spaces + "-" + random_amount_of_spaces + money_string, result * -1, '(negative amount)']
     end
 
-    tuple_with_o = [randomly_replace_zeros_by_o(money_string), result]
+    tuple_with_o = [randomly_replace_zeros_by_o(money_string), result, '(with O instead of 0)']
 
     accu << tuple_with_o unless tuple_with_o[0].nil?
 
+    accu << ['$' + money_string, result, '(with a dollar sign)']
+    accu << ['€' + money_string, result, '(with a euro sign)']
+    accu << ['£' + money_string, result, '(with a pound sign)']
+    accu << ['₤' + money_string, result, '(with a pound sign)']
+
     accu
-  }.each {|money_string, result|
+  }.each {|money_string, result, comment|
 
       expecting = if result
         "BigDecimal.new(\"#{result.inspect}\")"
@@ -67,12 +73,12 @@ def generate_tests specs
       end
       ruby_code << %!
 
-  it '\"#{money_string}\" should be parsed as #{result.inspect}' do
+  it '\"#{money_string}\" should be parsed as #{result.inspect} #{comment}' do
     MoneyParser.parse(\"#{money_string}\").should == #{expecting}
   end\n!
 
       js_code << %!
-  it('\"#{money_string}\" should be parsed as #{nil_to_null(result.inspect)}', function(){
+  it('\"#{money_string}\" should be parsed as #{nil_to_null(result.inspect)} #{comment}', function(){
     assert.equal(#{nil_to_null(result.inspect)}, parseMoney(\"#{money_string}\"));
   });\n!
 
