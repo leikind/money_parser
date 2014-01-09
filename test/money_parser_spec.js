@@ -1,5 +1,5 @@
 var assert = require("assert")
-var parseMoney = require('../vendor/assets/javascripts/parseMoney');
+var parseMoney = require('../vendor/assets/javascripts/parse_money');
 
 describe('moneyParse', function(){
 
