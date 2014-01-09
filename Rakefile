@@ -60,9 +60,16 @@ def generate_tests specs
     accu
   }.each {|money_string, result|
 
+      expecting = if result
+        precision = result.to_s.sub(/-\./, '').size
+        "BigDecimal.new(#{result.inspect}, #{precision})"
+      else
+        result.inspect
+      end
       ruby_code << %!
+
   it '\"#{money_string}\" should be parsed as #{result.inspect}' do
-    MoneyParser.parse(\"#{money_string}\").should == #{result.inspect}
+    MoneyParser.parse(\"#{money_string}\").should == #{expecting}
   end\n!
 
       js_code << %!

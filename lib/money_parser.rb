@@ -1,11 +1,14 @@
 # encoding: UTF-8
 # © Yuri Leikind 2014
 
+require 'bigdecimal'
+
 module MoneyParser
 
-  class Engine < ::Rails::Engine
+  if Kernel.const_defined?('Rails')
+    class Engine < ::Rails::Engine
+    end
   end
-
 
   def self.parse(money_string)
 
@@ -33,7 +36,12 @@ module MoneyParser
 
     # puts "#{cleaned_up} => #{normalized}"
 
-    normalized.to_f
+    if normalized
+      precision = normalized.sub(/-\./, '').size
+      BigDecimal.new(normalized, precision)
+    else
+      normalized
+    end
   end
 
 end
