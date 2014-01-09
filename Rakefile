@@ -61,8 +61,7 @@ def generate_tests specs
   }.each {|money_string, result|
 
       expecting = if result
-        precision = result.to_s.sub(/-\./, '').size
-        "BigDecimal.new(#{result.inspect}, #{precision})"
+        "BigDecimal.new(\"#{result.inspect}\")"
       else
         result.inspect
       end

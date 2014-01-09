@@ -34,14 +34,7 @@ module MoneyParser
       end
     end
 
-    # puts "#{cleaned_up} => #{normalized}"
-
-    if normalized
-      precision = normalized.sub(/-\./, '').size
-      BigDecimal.new(normalized, precision)
-    else
-      normalized
-    end
+    normalized ? BigDecimal.new(normalized) : normalized
   end
 
 end
