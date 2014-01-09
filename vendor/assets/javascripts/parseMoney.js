@@ -36,8 +36,8 @@ parseMoney = function(moneyString){
   return parseFloat(normalized);
 };
 
-if (module){
-  module.exports = parseMoney;
-}else{
+if (typeof module === 'undefined' ){
   window['parseMoney'] = parseMoney;
+}else{
+  module.exports = parseMoney;
 }
