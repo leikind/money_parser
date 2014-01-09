@@ -20,6 +20,6 @@ to your <tt>Gemfile</tt>, and
 
 to your <tt>app/assets/javascripts/application.js</tt>, and run <tt>bundle install</tt>.
 
-After that yuo can call JS function <tt>parseMoney()</tt> on the client side
+After that you can call JS function <tt>parseMoney()</tt> on the client side,
 and Ruby function <tt>MoneyParser.parse</tt> on the server side.
 
