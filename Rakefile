@@ -37,7 +37,9 @@ end
 def generate_tests specs
   ruby_code = "require 'spec_helper'\ndescribe MoneyParser do\n"
 
-  js_code = "var assert = require(\"assert\")\n\ndescribe('moneyParse', function(){\n"
+  js_code = "var assert = require(\"assert\")\n" +
+      "var parseMoney = require('../vendor/assets/javascripts/parseMoney');\n\n" +
+      "describe('moneyParse', function(){\n"
 
   specs.inject([]) {|accu, pair|
 
@@ -63,7 +65,7 @@ def generate_tests specs
 
       js_code << %!
   it('\"#{money_string}\" should be parsed as #{nil_to_null(result.inspect)}', function(){
-    assert.equal(#{nil_to_null(result.inspect)}, parse_money(\"#{money_string}\"));
+    assert.equal(#{nil_to_null(result.inspect)}, parseMoney(\"#{money_string}\"));
   });\n!
 
 

@@ -7,7 +7,8 @@ module MoneyParser
     cleaned_up = money_string.
       gsub(/\s+/,'').
       gsub(/(\d)o/i){$1 + '0'}.
-      gsub(/o(\d)/i){'0' + $1}.gsub(/\s+/,'').
+      gsub(/o(\d)/i){'0' + $1}.
+      gsub(/\s+/,'').
       tr(',', '.').
       gsub(/[^\d\.-]/, '')
 
