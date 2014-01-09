@@ -1,4 +1,5 @@
 # encoding: UTF-8
+# © Yuri Leikind 2014
 
 module MoneyParser
 

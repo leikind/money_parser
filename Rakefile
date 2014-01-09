@@ -1,3 +1,5 @@
+# © Yuri Leikind 2014
+
 require "bundler/gem_tasks"
 require 'rdoc/task'
 
@@ -84,10 +86,4 @@ task :generate_tests do |rdoc|
   File.open('./spec/money_parser_spec.rb', 'w'){|f| f.write ruby_code }
   File.open('./test/money_parser_spec.js', 'w'){|f| f.write js_code }
 end
-
-
-
-
-
-
 

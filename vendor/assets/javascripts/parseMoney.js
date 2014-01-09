@@ -1,3 +1,4 @@
+// © Yuri Leikind 2014
 
 parseMoney = function(moneyString){
 

@@ -1,6 +1,5 @@
 Author::  Yuri Leikind
 
-
 A simple function in Ruby and a similar function in Javascript which try
 to parse a string containing
 a money amount in any format and return a float.
@@ -20,4 +19,7 @@ to your <tt>Gemfile</tt>, and
   //= require parseMoney
 
 to your <tt>app/assets/javascripts/application.js</tt>, and run <tt>bundle install</tt>.
+
+After that yuo can call JS function <tt>parseMoney()</tt> on the client side
+and Ruby function <tt>MoneyParser.parse</tt> on the server side.
 
