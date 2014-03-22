@@ -12,6 +12,8 @@ module MoneyParser
 
   def self.parse(money_string)
 
+    return nil if money_string.nil?
+
     cleaned_up = money_string.
       gsub(/\s+/,'').
       gsub(/(\d)o/i){$1 + '0'}.

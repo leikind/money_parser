@@ -40,7 +40,7 @@ def generate_tests specs
   ruby_code = "require 'spec_helper'\ndescribe MoneyParser do\n"
 
   js_code = "var assert = require(\"assert\")\n" +
-      "var parseMoney = require('../vendor/assets/javascripts/parseMoney');\n\n" +
+      "var parseMoney = require('../vendor/assets/javascripts/parse_money');\n\n" +
       "describe('moneyParse', function(){\n"
 
 
@@ -54,14 +54,18 @@ def generate_tests specs
       accu << [random_amount_of_spaces + "-" + random_amount_of_spaces + money_string, result * -1, '(negative amount)']
     end
 
-    tuple_with_o = [randomly_replace_zeros_by_o(money_string), result, '(with O instead of 0)']
+    if money_string.is_a?(String)
+      tuple_with_o = [randomly_replace_zeros_by_o(money_string), result, '(with O instead of 0)']
 
-    accu << tuple_with_o unless tuple_with_o[0].nil?
+      accu << tuple_with_o unless tuple_with_o[0].nil?
 
-    accu << ['$' + money_string, result, '(with a dollar sign)']
-    accu << ['€' + money_string, result, '(with a euro sign)']
-    accu << ['£' + money_string, result, '(with a pound sign)']
-    accu << ['₤' + money_string, result, '(with a pound sign)']
+      accu << ['$' + money_string, result, '(with a dollar sign)']
+      accu << ['€' + money_string, result, '(with a euro sign)']
+      accu << ['£' + money_string, result, '(with a pound sign)']
+      accu << ['₤' + money_string, result, '(with a pound sign)']
+
+    end
+
 
     accu
   }.each {|money_string, result, comment|
@@ -71,15 +75,20 @@ def generate_tests specs
       else
         result.inspect
       end
+
+
+
       ruby_code << %!
 
-  it '\"#{money_string}\" should be parsed as #{result.inspect} #{comment}' do
-    MoneyParser.parse(\"#{money_string}\").should == #{expecting}
+  it '#{money_string.inspect} should be parsed as #{result.inspect} #{comment}' do
+    MoneyParser.parse(#{money_string.inspect}).should == #{expecting}
   end\n!
 
+      money_string_js = money_string.nil? ? 'null' : money_string.inspect
+
       js_code << %!
-  it('\"#{money_string}\" should be parsed as #{nil_to_null(result.inspect)} #{comment}', function(){
-    assert.equal(#{nil_to_null(result.inspect)}, parseMoney(\"#{money_string}\"));
+  it('#{money_string_js} should be parsed as #{nil_to_null(result.inspect)} #{comment}', function(){
+    assert.equal(#{nil_to_null(result.inspect)}, parseMoney(#{money_string_js}));
   });\n!
 
 

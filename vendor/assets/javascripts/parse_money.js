@@ -2,6 +2,10 @@
 
 parseMoney = function(moneyString){
 
+  if (moneyString === null || moneyString === null){
+    return null;
+  }
+
   var cleanedUp = moneyString.
     replace(/\s+/g,'').
     replace(/(\d)o/ig, function(match, p1, offset, string){

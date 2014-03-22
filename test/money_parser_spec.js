@@ -3,6 +3,10 @@ var parseMoney = require('../vendor/assets/javascripts/parse_money');
 
 describe('moneyParse', function(){
 
+  it('null should be parsed as null ', function(){
+    assert.equal(null, parseMoney(null));
+  });
+
   it('"2000.01" should be parsed as 2000.01 ', function(){
     assert.equal(2000.01, parseMoney("2000.01"));
   });

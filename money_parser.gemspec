@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name          = 'money_parser'
-  s.version       = '0.0.1'
+  s.version       = '0.0.2'
   s.homepage      = 'https://github.com/leikind/money_parser'
-  s.date          = '2014-01-05'
+  s.date          = '2014-03-2'
   s.summary       = 'Tries to parse various crazy money formats'
   s.description   = 'Tries to parse various crazy money formats'
   s.authors       = ['Yuri Leikind']
