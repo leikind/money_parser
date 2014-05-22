@@ -30,6 +30,9 @@ parseMoney = function(moneyString){
   if (chunks.length == 1){
     normalized = cleanedUp;
   }else{
+    if (! chunks[chunks.length - 1]){
+      return;
+    }
     if (chunks[chunks.length - 1].length > 2){
       normalized = chunks.join("")
     }else{

@@ -29,6 +29,7 @@ module MoneyParser
     normalized = if chunks.size == 1
       cleaned_up
     else
+      return nil if chunks[-1].nil?
       if chunks[-1].size > 2
         chunks.join
       else
