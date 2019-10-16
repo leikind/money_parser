@@ -71,7 +71,7 @@ def generate_tests specs
   }.each {|money_string, result, comment|
 
       expecting = if result
-        "BigDecimal.new(\"#{result.inspect}\")"
+        "BigDecimal(\"#{result.inspect}\")"
       else
         result.inspect
       end

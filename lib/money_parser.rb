@@ -37,7 +37,7 @@ module MoneyParser
       end
     end
 
-    normalized ? BigDecimal.new(normalized) : normalized
+    normalized ? BigDecimal(normalized) : normalized
   end
 
 end
